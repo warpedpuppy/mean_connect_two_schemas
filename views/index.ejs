@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        mean test
+    </title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+</head>
+
+<body ng-controller="MainCtrl" ng-app="bandContainer" >
+    <div class="row">
+        <ui-view></ui-view>
+    </div>
+    <script type="text/ng-template" id="/home.html">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">bands: {{bandQ}}</div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">names: {{nameQ}}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <button class="btn btn-xs btn-success" ng-click="addBand('green')">add green band</button>
+                <button class="btn btn-xs btn-warning" ng-click="addBand('orange')">add orange band</button>
+                <button class="btn btn-xs btn-danger" ng-click="deleteAllBands()">delete all bands</button>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                 <form ng-submit="addName()">
+                    <input type='text' class='form-control input-class' placeholder="add name here" ng-model="name" />
+                    <button type='submit' class='btn btn-info btn-xs'>add name</button>
+                    </form>
+                    <button type='submit' class='btn btn-danger btn-xs' ng-click="removeAllNames()">remove all names</button>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="container">
+                    <div ng-repeat="item in bands" class='blocks' ng-click="deleteThis(item._id, $index)" style="background-color: {{item.color}};"> {{item._id.substr(-4)}}
+                       <div class="associatedNames">
+                       <span ng-show="item.fans.length > 0"> {{items.fans.length}}associated names: </span><span ng-repeat="name in item.fans">{{name.name}}<span ng-show="$index < item.fans.length-1">, </span>
+                         </span>
+                     </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="container">
+                    <div ng-repeat="name in names" class='name_div'> {{name.name}}
+                        <select class='form-control btn btn-mini'  ng-init="somethingHere = somethingHere || options[0].value" ng-model="selectedValue" ng-change="selectBand(selectedValue, name._id)" ng-options="band._id.substr(-4) for band in bands ">
+                             <option value=""> select a band's id </option>
+                        </select>
+                    </div>
+               </div>
+            </div>
+        </div>
+    </script>
+</body>
+<script src="/javascripts/angularApp.js"></script>
+
+</html>
